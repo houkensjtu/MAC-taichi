@@ -86,7 +86,7 @@ def substep():
     correct_velocity()
     interp_velocity()
 
-gui = ti.GUI('velocity contour', (nx+1, ny+1))
+gui = ti.GUI(f'Re = {un * lx / mu:4.0f} V_mag', (nx+1, ny+1))
 step = 0
 while gui.running: # Main loop
     print(f'>>> step : {step:<6d}, time : {step*dt:<6.3f} sec')        
@@ -94,6 +94,6 @@ while gui.running: # Main loop
     if step % 10 == 1:
         V_np = V_mag.to_numpy()
         V_img = cm.jet(V_np)
-        gui.set_image(V_img)
+        gui.set_image(V_img) # Plot the velocity magnitude contour
         gui.show()
     step += 1
