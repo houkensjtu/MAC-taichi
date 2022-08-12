@@ -24,7 +24,8 @@ Simply run the `mac.py` script through Python
 python3 mac.py
 ```
 and you should see the following GUI animation
-<img src="./fig/video.gif" width="180">
+
+<p style="text-align:center;"><img src="./fig/video.gif" width="180"></p>
 
 ## Results
 Below are two contour plots of the velocity magnitude for Re = 400 and Re = 1000 at steady state.
