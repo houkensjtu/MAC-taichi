@@ -16,7 +16,15 @@ python3 -m pip install -r requirements.txt
 ```
 
 ## The lid-driven cavity case
-Lid-driven cavity is a common validation case used by CFD solvers. 
+Lid-driven cavity is a common validation case used by CFD solvers.
+
+## How to run
+Simply run the `mac.py` script through Python
+```bash
+python3 mac.py
+```
+and you should see the following GUI animation
+<img src="./fig/video.gif" width="180">
 
 ## Results
-Below are two contour plots of the velocity magnitude for Re = 400 and Re = 1000.
+Below are two contour plots of the velocity magnitude for Re = 400 and Re = 1000 at steady state.
