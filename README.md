@@ -28,4 +28,7 @@ and you should see the following GUI animation
 <p style="text-align:center;"><img src="./fig/video.gif" width="180"></p>
 
 ## Results
-Below are two contour plots of the velocity magnitude for Re = 400 and Re = 1000 at steady state.
+Below are the contour plots of the velocity magnitude for Re = 100, Re = 400 and Re = 1000 at steady state, respectively.
+|Re = 100|Re = 400|Re = 1000|
+|:---:|:---:|:---:|
+|![re100](./fig/re100.png)|![re400](./fig/re400.png)|![re1000](./fig/re1000.png)|
