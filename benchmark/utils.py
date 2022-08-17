@@ -1,7 +1,7 @@
 import time
 import taichi as ti
 import numpy as np
-from numba import cuda, njit, prange
+from numba import cuda
 
 lx, ly, nx, ny = 1.0, 1.0, 4096, 4096
 dx, dy, dt = lx/nx, ly/ny, 0.001
@@ -49,11 +49,13 @@ def benchmark(func):
             elif type(ut) is cuda.cudadrv.devicearray.DeviceNDArray:
                 ut_diff = ut.copy_to_host()
                 vt_diff = vt.copy_to_host()
-            else: 
+            else:
                 ut_diff = ut
                 vt_diff = vt
-            print(f"Verify UT matrix for {name}: ", np.allclose(ut_diff, ut_gt, atol=1, rtol=1, equal_nan=True)) 
-            print(f"Verify VT matrix for {name}: ", np.allclose(vt_diff, vt_gt, atol=1, rtol=1, equal_nan=True)) 
+            print(f"Verify UT matrix for {name}: ", np.allclose(
+                ut_diff, ut_gt, atol=1, rtol=1, equal_nan=True))
+            print(f"Verify VT matrix for {name}: ", np.allclose(
+                vt_diff, vt_gt, atol=1, rtol=1, equal_nan=True))
         now = time.perf_counter()
         for _ in range(nIter):
             func(u, v, ut, vt)
@@ -61,8 +63,9 @@ def benchmark(func):
         print(f'Time spent in {name} for {nIter}x: {(end -now):4.2f} sec.')
     return wrapper
 
+
 def compute_ground_truth(calc_velocity_func):
-    u, v, ut, vt= gen_data_numpy()
+    u, v, ut, vt = gen_data_numpy()
     # Numpy is way too slow even for ground truth computation.
     calc_velocity_func(u, v, ut, vt)
     return ut, vt
