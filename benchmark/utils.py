@@ -39,7 +39,7 @@ def gen_data_taichi():
 
 
 def benchmark(func):
-    def wrapper(u, v, ut, vt, name="Taichi", nIter=2000):
+    def wrapper(u, v, ut, vt, name="Taichi", nIter=1000):
         func(u, v, ut, vt)
         now = time.perf_counter()
         for _ in range(nIter):

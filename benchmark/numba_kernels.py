@@ -56,3 +56,4 @@ def launch_numba_cuda(*args):
     total_threads = (nx + 1) * (ny + 1)
     grid_dim = (total_threads + block_dim - 1) // block_dim
     calc_velocity_numba_cuda[grid_dim, block_dim](*args)
+    cuda.synchronize()
