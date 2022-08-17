@@ -26,14 +26,14 @@ def init():
         
 @ti.kernel
 def calc_velocity():
-    for i,j in ti.ndrange((1,nx+1),(1,ny+2)):
+    for i,j in ti.ndrange((1,nx),(1,ny+1)):
         ut[i,j] = u[i,j] + dt * ((-0.25)*
            (((u[i+1,j] + u[i,j])**2 - (u[i,j] + u[i-1,j])**2) / dx
            +((u[i,j+1] + u[i,j]) * (v[i+1,j] + v[i,j])
            -(u[i,j] + u[i,j-1]) * (v[i+1,j-1] + v[i,j-1])) / dy)
            +(mu) * ((u[i+1,j] - 2 * u[i,j] + u[i-1,j]) / dx ** 2
            +(u[i,j+1] - 2 * u[i,j] + u[i,j-1]) / dy ** 2))
-    for i,j in ti.ndrange((1,nx+2),(1,ny+1)):
+    for i,j in ti.ndrange((1,nx+1),(1,ny)):
         vt[i,j] = v[i,j] + dt * ((-0.25)*
           (((u[i,j+1] + u[i,j]) * (v[i+1,j]+v[i,j])
           -(u[i-1,j+1] + u[i-1,j]) * (v[i,j]+v[i-1,j])) / dx
@@ -56,16 +56,16 @@ vt_nb = vt.to_numpy()
 
 @njit(parallel=True, fastmath=True)
 def calc_velocity_numba(u, v, ut, vt):
-    for i in prange(1,nx+1):
-        for j in prange(1,ny+2):
+    for i in prange(1,nx):
+        for j in prange(1,ny+1):
             ut[i,j] = u[i,j] + dt * ((-0.25)*
                (((u[i+1,j] + u[i,j])**2 - (u[i,j] + u[i-1,j])**2) / dx
                +((u[i,j+1] + u[i,j]) * (v[i+1,j] + v[i,j])
                -(u[i,j] + u[i,j-1]) * (v[i+1,j-1] + v[i,j-1])) / dy)
                +(mu) * ((u[i+1,j] - 2 * u[i,j] + u[i-1,j]) / dx ** 2
                +(u[i,j+1] - 2 * u[i,j] + u[i,j-1]) / dy ** 2))
-    for i in prange(1,nx+2):
-        for j in prange(1,ny+1):
+    for i in prange(1,nx+1):
+        for j in prange(1,ny):
             vt[i,j] = v[i,j] + dt * ((-0.25)*
                (((u[i,j+1] + u[i,j]) * (v[i+1,j]+v[i,j])
                -(u[i-1,j+1] + u[i-1,j]) * (v[i,j]+v[i-1,j])) / dx
