@@ -21,7 +21,6 @@ def calc_velocity_numba(u, v, ut, vt):
                                        + (mu)*((v[i+1, j] - 2 * v[i, j] + v[i-1, j]) / dx ** 2
                                                + (v[i, j+1] - 2 * v[i, j] + v[i, j-1]) / dy ** 2))
 
-
 @benchmark
 def launch_numba(*args):
     calc_velocity_numba(*args)
