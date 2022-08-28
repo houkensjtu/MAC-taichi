@@ -6,7 +6,7 @@ from multiprocessing import Process
 import time
 import taichi as ti
 
-from cuda_runner import launch as launch_cuda
+from cuda_wrapper import launch as launch_cuda
 
 
 def run(gen_data_func, calc_func, name, ut_groundtruth=None, vt_groundtruth=None, ctx_init_func=None):

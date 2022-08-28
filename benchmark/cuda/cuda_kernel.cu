@@ -74,7 +74,7 @@ __global__ void calc_velocity(
 
 namespace py = pybind11;
 
-void benchmark_kernel(
+double benchmark_kernel(
         py::array_t<float> u,
         py::array_t<float> ut,
         py::array_t<float> v,
@@ -112,9 +112,8 @@ void benchmark_kernel(
         cudaDeviceSynchronize();
     }
     tmr.stop();
-    printf("Time for %dx runs: %lfs\n", nIter, tmr.getTimeMillisecond() / 1000.0);
-
-    fflush(stdout);
+    //printf("Time for %dx runs: %lfs\n", nIter, tmr.getTimeMillisecond() / 1000.0);
+    //fflush(stdout);
     
 
     cudaMemcpy((float*) ut.data(), ut_d, sizeof(float) * (nx + 1) * (ny + 2), cudaMemcpyDeviceToHost);
@@ -124,6 +123,7 @@ void benchmark_kernel(
     cudaFree(ut_d);
     cudaFree(v_d);
     cudaFree(vt_d);
+    return tmr.getTimeMillisecond() / 1000.0;
 }
 
 PYBIND11_MODULE(calc_velocity_cuda, m) {

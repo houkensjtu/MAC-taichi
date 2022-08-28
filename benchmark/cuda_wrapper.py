@@ -20,7 +20,8 @@ except ImportError:
     from calc_velocity_cuda import run_benchmark
     print("OK!")
 
-def launch(u, v, ut, vt, name, ut_gt, vt_gt):
-    run_benchmark(u, ut, v, vt, dt, dx, dy, mu, nx, ny, 1000)
+def launch(u, v, ut, vt, name, ut_gt, vt_gt, nIter=1000):
+    time = run_benchmark(u, ut, v, vt, dt, dx, dy, mu, nx, ny, nIter)
     print(f"Verify UT matrix for {name}: ", np.allclose(ut, ut_gt, atol=1e-3, rtol=1e-3))
     print(f"Verify VT matrix for {name}: ", np.allclose(vt, vt_gt, atol=1e-3, rtol=1e-3))
+    print(f'Time spent in {name} for {nIter}x: {time:4.2f} sec.')
