@@ -53,9 +53,9 @@ def benchmark(func):
                 ut_diff = ut
                 vt_diff = vt
             print(f"Verify UT matrix for {name}: ", np.allclose(
-                ut_diff, ut_gt, atol=1, rtol=1, equal_nan=True))
+                ut_diff, ut_gt, atol=1e-3, rtol=1e-3))
             print(f"Verify VT matrix for {name}: ", np.allclose(
-                vt_diff, vt_gt, atol=1, rtol=1, equal_nan=True))
+                vt_diff, vt_gt, atol=1e-3, rtol=1e-3))
         now = time.perf_counter()
         for _ in range(nIter):
             func(u, v, ut, vt)
