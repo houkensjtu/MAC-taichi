@@ -4,6 +4,9 @@ from utils import gen_data_numpy, gen_data_numba_cuda, gen_data_taichi, compute_
 
 from multiprocessing import Process
 import time
+import taichi as ti
+
+from cuda_wrapper import launch as launch_cuda
 
 
 def run(gen_data_func, calc_func, name, ut_groundtruth=None, vt_groundtruth=None, ctx_init_func=None):
@@ -21,19 +24,7 @@ print("Computing ground truth...")
 ut, vt = compute_ground_truth(calc_velocity_numba)
 print("Done")
 
-# Benchmark Numba CPU
-p = run(gen_data_numpy, launch_numba, "Numba-CPU")
-
-# Benchmark Numba CUDA
-# Numpy CUDA has context conflict with Taichi, move into a subprocess.
-p = Process(target=run, args=(gen_data_numba_cuda,
-            launch_numba_cuda, "Numba-CUDA", ut, vt))
-p.start()
-p.join()
-time.sleep(1)
-
-# Benchmark Taichi CUDA
-p = Process(target=run, args=(gen_data_taichi, launch_taichi,
-            "Taichi-CUDA", ut, vt, init_taichi))
-p.start()
-p.join()
+run(gen_data_numpy, launch_numba,  "Numba-CPU", ut, vt)
+run(gen_data_numba_cuda, launch_numba_cuda,  "Numba-CUDA", ut, vt)
+run(gen_data_numpy, launch_cuda, "CUDA", ut, vt)
+run(gen_data_taichi, launch_taichi, "Taichi-CUDA", ut, vt, init_taichi)
